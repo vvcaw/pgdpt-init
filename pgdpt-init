@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Check if directory is a valid directory
+if [[ -d $1 ]]; then
+  echo "Directory path is valid!"
+fi
+
+# Ignore changes on .gitignore and build file to stop them for being pushed to version control
+git update-index --skip-worktree .gitignore
+git update-index --skip-worktree build.gradle
+
+# Push test folder into .gitignore
+echo "/test" >> .gitignore
+
+# Push test implementation into build.gradle file
+echo -e "\ndependencies {\n    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'\n}" >> build.gradle
+
+# Push useJUnitPlatform into build.gradle file
+echo -e "\ntest {\n    useJUnitPlatform()\n}" >> build.gradle
+
+# Replace test src dir in build.gradle file
+sed -i "s/srcDirs = [[]]/srcDirs = ['test']/" build.gradle
+
+# Link test folder to repo
+ln -s $1
