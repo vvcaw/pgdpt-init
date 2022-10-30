@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Check if directory is a valid directory
-if [[ -d $1 ]]; then
-  echo "Directory path is valid!"
+if ! [[ -d $1 ]]; then
+  echo "Directory path is invalid!"
 fi
 
 # Ignore changes on .gitignore and build file to stop them for being pushed to version control
