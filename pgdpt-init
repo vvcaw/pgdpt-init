@@ -19,7 +19,7 @@ echo -e "\ndependencies {\n    testImplementation 'org.junit.jupiter:junit-jupit
 echo -e "\ntest {\n    useJUnitPlatform()\n}" >> build.gradle
 
 # Replace test src dir in build.gradle file
-sed -i "s/srcDirs = [[]]/srcDirs = ['test']/" build.gradle
+perl -i -pe "s/srcDirs = [[]]/srcDirs = ['test']/" build.gradle
 
 # Link test folder to repo
 ln -s $1
