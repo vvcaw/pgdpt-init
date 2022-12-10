@@ -1,7 +1,15 @@
 #!/bin/bash
 
+pathToTests="$1"
+
+# No path given
+if [ $# -eq 0 ]; then
+    echo "Please provide the path to the test repository"
+    exit 1
+fi
+
 # Check if directory is a valid directory
-if ! [[ -d $1 ]]; then
+if ! [[ -d "$pathToTests" ]]; then
   echo "Directory path is invalid!"
   exit 1
 fi
@@ -9,9 +17,9 @@ fi
 # Extract folder name & exercise
 folderName=$(basename $(pwd))
 weekAndExercise=${folderName:8:6}
-finalpath=$1/$weekAndExercise/test
-if ! [[ -d $finalpath ]]; then
-  echo "There seem to be no tests for $weekAndExercise available in $1 :("
+finalpath="$pathToTests/$weekAndExercise/test"
+if ! [[ -d "$finalpath" ]]; then
+  echo "There seem to be no tests for $weekAndExercise available in $pathToTests :("
   exit 1
 fi
 
@@ -22,14 +30,18 @@ git update-index --skip-worktree build.gradle
 # Push test folder into .gitignore
 echo "/test" >> .gitignore
 
+echo "Made git ignore the test files"
+
 # Push test implementation into build.gradle file
 if ! grep -qF "org.junit.jupiter:junit-jupiter" build.gradle; then 
   echo -e "\ndependencies {\n    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'\n}" >> build.gradle
+  echo "Added junit to build.gradle"
 fi;
 
 # Push useJUnitPlatform into build.gradle file
 if ! grep -qF "useJUnitPlatform()" build.gradle; then
   echo -e "\ntest {\n    useJUnitPlatform()\n}" >> build.gradle
+  echo "Added useJUnitPlatform() to build.gradle"
 fi;
 
 # Replace test src dir in build.gradle file
@@ -37,3 +49,6 @@ perl -i -pe "s/srcDirs = [[]]/srcDirs = ['test']/" build.gradle
 
 # Link test folder to repo
 ln -s $finalpath
+echo "Successfully linked tests"
+
+echo "Happy testing!"
