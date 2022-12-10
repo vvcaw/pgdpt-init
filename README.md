@@ -9,4 +9,4 @@ Automatically make your pgdp homework ready for testing.
 - Creates a symbolic link to the directory provided to the script, therefore updating the `pgdp2223-tests` repository will also update the linked tests in your repository.
 
 # Installation & Demo
-[![asciicast](https://asciinema.org/a/lsUr1Azv6GkH46gwJshwOMpcT.svg)](https://asciinema.org/a/lsUr1Azv6GkH46gwJshwOMpcT)
+[![asciicast](https://asciinema.org/a/Gaaewrw4GVEFM6ySGkGxPOGaQ.svg)](https://asciinema.org/a/Gaaewrw4GVEFM6ySGkGxPOGaQ)
