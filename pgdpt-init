@@ -2,10 +2,10 @@
 
 pathToTests="$1"
 
-# Fallback to default path
+# No path given
 if [ $# -eq 0 ]; then
-    pathToTests="../pgdp2223-tests"
-    echo "No test directory given, defaulted to $pathToTests"
+    echo "Please provide the path to the test repository"
+    exit 1
 fi
 
 # Check if directory is a valid directory
