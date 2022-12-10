@@ -13,10 +13,14 @@ git update-index --skip-worktree build.gradle
 echo "/test" >> .gitignore
 
 # Push test implementation into build.gradle file
-echo -e "\ndependencies {\n    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'\n}" >> build.gradle
+if ! grep -F "org.junit.jupiter:junit-jupiter" build.gradle; then 
+  echo -e "\ndependencies {\n    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'\n}" >> build.gradle
+fi;
 
 # Push useJUnitPlatform into build.gradle file
-echo -e "\ntest {\n    useJUnitPlatform()\n}" >> build.gradle
+if ! grep -F "useJUnitPlatform()" build.gradle; then
+  echo -e "\ntest {\n    useJUnitPlatform()\n}" >> build.gradle
+fi;
 
 # Replace test src dir in build.gradle file
 perl -i -pe "s/srcDirs = [[]]/srcDirs = ['test']/" build.gradle
